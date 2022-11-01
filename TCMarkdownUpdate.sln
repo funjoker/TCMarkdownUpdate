@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCMarkdownUpdate", "TCMarkdownUpdate\TCMarkdownUpdate.csproj", "{931C8510-A427-4662-BD95-31F4A9C9CA0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{931C8510-A427-4662-BD95-31F4A9C9CA0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{931C8510-A427-4662-BD95-31F4A9C9CA0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{931C8510-A427-4662-BD95-31F4A9C9CA0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{931C8510-A427-4662-BD95-31F4A9C9CA0F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B536429B-3325-4EBC-93FE-68ECED39C9AD}
+	EndGlobalSection
+EndGlobal

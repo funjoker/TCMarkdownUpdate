@@ -26,15 +26,15 @@ namespace TCMarkdownUpdate
             command.CommandText = "SHOW TABLES;";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
-            
+
             while (reader.Read())
             {
                 tableNames.Add(reader.GetString(0));
                 counter++;
             }
-            
+
             reader.Close();
-            
+
             Console.WriteLine($"Loaded {counter} table names from: {connection.Database}");
         }
 
@@ -519,13 +519,32 @@ namespace TCMarkdownUpdate
                                 {
                                     newArrLine[j] = "## Structure";
                                     newArrLine[j + 1] = string.Empty;
-                                    newArrLine[j + 2] ="| Field | Type | Attributes | Key | Null | Default | Extra | Comment |";
-                                    newArrLine[j + 3] = "| --- | --- | --- | :---: | :---: | --- | --- | --- |";
+                                    if (hasSourceInSniff)
+                                    {
+                                        newArrLine[j + 2] = "| Field | Type | Attributes | Key | Null | Default | Extra | Comment | Source in sniff |";
+                                        newArrLine[j + 3] = "| --- | --- | --- | :---: | :---: | --- | --- | --- | --- |";
+                                    }
+                                    else
+                                    {
+                                        newArrLine[j + 2] = "| Field | Type | Attributes | Key | Null | Default | Extra | Comment |";
+                                        newArrLine[j + 3] = "| --- | --- | --- | :---: | :---: | --- | --- | --- |";
+                                    }
 
                                     int counter = 1;
                                     foreach (TableData tableData in tableDatas)
                                     {
-                                        newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |";
+                                        if (hasSourceInSniff)
+                                        {
+                                            string? sourceInSniff;
+                                            if (sourceInSniffDescription.TryGetValue(tableData.Name, out sourceInSniff))
+                                                newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} | {sourceInSniff} |";
+                                            else
+                                                newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |  |";
+                                        }
+                                        else
+                                        {
+                                            newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |";
+                                        }
                                         counter++;
                                     }
                                     newArrLine[j + 3 + counter] = "&nbsp;";

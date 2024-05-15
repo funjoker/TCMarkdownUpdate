@@ -330,16 +330,16 @@ namespace TCMarkdownUpdate
                         outputFile.WriteLine("date: {0}", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
                         outputFile.WriteLine("tags: database, {0}, {1}", version, db);
                         outputFile.WriteLine("editor: markdown");
-                        outputFile.WriteLine("dateCreated: 2021-08-30T06:00:00.000Z");
+                        outputFile.WriteLine("dateCreated: {0}", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
                         outputFile.WriteLine("---");
                         outputFile.WriteLine();
 
                         // BUTTONS
-                        outputFile.WriteLine("<a href=\"https://trinitycore.info/en/database/{0}/{1}/{2}\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--left mdi mdi-arrow-left theme--light\"></i><span>Back to '{0}'</span></span></a>" +
+                        outputFile.WriteLine("<a href=\"https://trinitycore.info/en/database/{0}/{1}/{2}\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--left mdi mdi-arrow-left theme--light\"></i><span>Back to '{2}'</span></span></a>" +
                             "&nbsp;&nbsp;&nbsp;" +
                             "<a href=\"https://trinitycore.info/en/database/{0}/{1}/home\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--left mdi mdi-home-outline theme--light\"></i><span>Return to {1}</span></span></a>" +
                             "&nbsp;&nbsp;&nbsp;" +
-                            "<a href=\"https://trinitycore.info/en/database/{0}/{1}/{3}\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><span>Go to '{1}'</span><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--right mdi mdi-arrow-right theme--light\"></i></span></a>", version, db, tableNameBack, tableNameForward);
+                            "<a href=\"https://trinitycore.info/en/database/{0}/{1}/{3}\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><span>Go to '{3}'</span><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--right mdi mdi-arrow-right theme--light\"></i></span></a>", version, db, tableNameBack, tableNameForward);
                         outputFile.WriteLine();
 
                         // STRUCTURE
@@ -355,7 +355,10 @@ namespace TCMarkdownUpdate
                             foreach (TableData tableData in tableDatas)
                             {
                                 columnNames.Add(tableData.Name);
-                                outputFile.WriteLine("| [{0}](#{1}) | {2} | {3} | {4} | {5} | {6} | {7} | {8} |", tableData.Name, tableData.Name.ToLower(), tableData.Type, tableData.Attributes, tableData.Key, tableData.Null, tableData.Default, tableData.Extra, tableData.Comment);
+                                if (tableData.Name.ToLower().Equals("id") || tableData.Name.ToLower().Equals("name") || tableData.Name.ToLower().Equals("action"))
+                                    outputFile.WriteLine("| [{0}](#{1}-alt) | {2} | {3} | {4} | {5} | {6} | {7} | {8} |", tableData.Name, tableData.Name.ToLower(), tableData.Type, tableData.Attributes, tableData.Key, tableData.Null, tableData.Default, tableData.Extra, tableData.Comment);
+                                else
+                                    outputFile.WriteLine("| [{0}](#{1}) | {2} | {3} | {4} | {5} | {6} | {7} | {8} |", tableData.Name, tableData.Name.ToLower(), tableData.Type, tableData.Attributes, tableData.Key, tableData.Null, tableData.Default, tableData.Extra, tableData.Comment);
                             }
                         }
                         outputFile.WriteLine("&nbsp;");
@@ -384,7 +387,10 @@ namespace TCMarkdownUpdate
                             }
                             else
                             {
-                                outputFile.WriteLine("### {0}", columnName);
+                                if (columnName.ToLower().Equals("id") || columnName.ToLower().Equals("name") || columnName.ToLower().Equals("action"))
+                                    outputFile.WriteLine("### {0} <!-- {{#{1}-alt}} -->", columnName, columnName.ToLower());
+                                else
+                                    outputFile.WriteLine("### {0}", columnName);
                                 outputFile.WriteLine("*- no description -*");
                                 outputFile.WriteLine("&nbsp;");
                                 outputFile.WriteLine();
@@ -392,11 +398,11 @@ namespace TCMarkdownUpdate
                         }
 
                         // BUTTONS
-                        outputFile.WriteLine("<a href=\"https://trinitycore.info/en/database/{0}/{1}/{2}\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--left mdi mdi-arrow-left theme--light\"></i><span>Back to '{0}'</span></span></a>" +
+                        outputFile.WriteLine("<a href=\"https://trinitycore.info/en/database/{0}/{1}/{2}\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--left mdi mdi-arrow-left theme--light\"></i><span>Back to '{2}'</span></span></a>" +
                                                     "&nbsp;&nbsp;&nbsp;" +
                                                     "<a href=\"https://trinitycore.info/en/database/{0}/{1}/home\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--left mdi mdi-home-outline theme--light\"></i><span>Return to {1}</span></span></a>" +
                                                     "&nbsp;&nbsp;&nbsp;" +
-                                                    "<a href=\"https://trinitycore.info/en/database/{0}/{1}/{3}\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><span>Go to '{1}'</span><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--right mdi mdi-arrow-right theme--light\"></i></span></a>", version, db, tableNameBack, tableNameForward);
+                                                    "<a href=\"https://trinitycore.info/en/database/{0}/{1}/{3}\" class=\"mt-5 v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default darkblue--text text--lighten-3\"><span class=\"v-btn__content\"><span>Go to '{3}'</span><i aria-hidden=\"true\" class=\"v-icon notranslate v-icon--right mdi mdi-arrow-right theme--light\"></i></span></a>", version, db, tableNameBack, tableNameForward);
                     }
                 }
                 else
@@ -477,7 +483,8 @@ namespace TCMarkdownUpdate
                                 else
                                     break;
                             }
-                            fileColumnDescription.Add(arrLine[line].Replace("### ", ""), description);
+                            Console.WriteLine("Storing table {0} description of: {1}", tableName, arrLine[line].Replace("### ", "").Replace(" <!-- {#id-alt} -->", "").Replace(" <!-- {#name-alt} -->", "").Replace(" <!-- {#action-alt} -->", ""));
+                            fileColumnDescription.Add(arrLine[line].Replace("### ", "").Replace(" <!-- {#id-alt} -->", "").Replace(" <!-- {#name-alt} -->", "").Replace(" <!-- {#action-alt} -->", ""), description);
                         }
                     }
 
@@ -494,12 +501,27 @@ namespace TCMarkdownUpdate
                                 {
                                     string? sourceInSniff;
                                     if (sourceInSniffDescription.TryGetValue(tableData.Name, out sourceInSniff))
-                                        ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} | {sourceInSniff} |", path, line);
+                                    {
+                                        if (tableData.Name.ToLower().Equals("id") || tableData.Name.ToLower().Equals("name") || tableData.Name.ToLower().Equals("action"))
+                                            ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}-alt) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} | {sourceInSniff} |", path, line);
+                                        else
+                                            ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} | {sourceInSniff} |", path, line);
+                                    }
                                     else
-                                        ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |  |", path, line);
+                                    {
+                                        if (tableData.Name.ToLower().Equals("id") || tableData.Name.ToLower().Equals("name") || tableData.Name.ToLower().Equals("action"))
+                                            ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}-alt) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |  |", path, line);
+                                        else
+                                            ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |  |", path, line);
+                                    }
                                 }
                                 else
-                                    ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |", path, line);
+                                {
+                                    if (tableData.Name.ToLower().Equals("id") || tableData.Name.ToLower().Equals("name") || tableData.Name.ToLower().Equals("action"))
+                                        ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}-alt) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |", path, line);
+                                    else
+                                        ChangeLine($"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |", path, line);
+                                }
                                 line++;
                             }
                         }
@@ -537,13 +559,26 @@ namespace TCMarkdownUpdate
                                         {
                                             string? sourceInSniff;
                                             if (sourceInSniffDescription.TryGetValue(tableData.Name, out sourceInSniff))
-                                                newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} | {sourceInSniff} |";
+                                            {
+                                                if (tableData.Name.ToLower().Equals("id") || tableData.Name.ToLower().Equals("name") || tableData.Name.ToLower().Equals("action"))
+                                                    newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}-alt) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} | {sourceInSniff} |";
+                                                else
+                                                    newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} | {sourceInSniff} |";
+                                            }
                                             else
-                                                newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |  |";
+                                            {
+                                                if (tableData.Name.ToLower().Equals("id") || tableData.Name.ToLower().Equals("name") || tableData.Name.ToLower().Equals("action"))
+                                                    newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}-alt) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |  |";
+                                                else
+                                                    newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |  |";
+                                            }
                                         }
                                         else
                                         {
-                                            newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |";
+                                            if (tableData.Name.ToLower().Equals("id") || tableData.Name.ToLower().Equals("name") || tableData.Name.ToLower().Equals("action"))
+                                                newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}-alt) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |";
+                                            else
+                                                newArrLine[j + 3 + counter] = $"| [{tableData.Name}](#{tableData.Name.ToLower()}) | {tableData.Type} | {tableData.Attributes} | {tableData.Key} | {tableData.Null} | {tableData.Default} | {tableData.Extra} | {tableData.Comment} |";
                                         }
                                         counter++;
                                     }
@@ -592,7 +627,10 @@ namespace TCMarkdownUpdate
 
                                     foreach (TableData tableData in tableDatas)
                                     {
-                                        newLines.Add($"### {tableData.Name}");
+                                        if (tableData.Name.ToLower().Equals("id") || tableData.Name.ToLower().Equals("name") || tableData.Name.ToLower().Equals("action"))
+                                            newLines.Add($"### {tableData.Name} <!-- {{#{tableData.Name.ToLower()}-alt}} -->");
+                                        else
+                                            newLines.Add($"### {tableData.Name}");
                                         List<string>? descriptions;
                                         if (fileColumnDescription.TryGetValue(tableData.Name, out descriptions))
                                         {
